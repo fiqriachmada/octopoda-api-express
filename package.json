@@ -12,6 +12,7 @@
     "mysql2": "^2.3.3",
     "node-modules": "^1.0.1",
     "nodemon": "^2.0.16",
+    "sequelize": "^6.32.0",
     "uuid": "^9.0.0"
   },
   "name": "harry-potter-api",
