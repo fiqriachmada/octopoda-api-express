@@ -5,6 +5,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import getAllProduct from './src/controller/product/getAllProduct.js';
+import getProductById from './src/controller/product/getProductById.js';
+import putProductById from './src/controller/product/putProductById.js';
 
 dotenv.config();
 
@@ -19,6 +21,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/products', getAllProduct);
+
+app.use('/products', getProductById);
+
+app.use('/products', putProductById);
 
 // app.use('/characters', getAllCharacter)
 

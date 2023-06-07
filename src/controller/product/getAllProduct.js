@@ -6,7 +6,10 @@ const getAllProduct = Router();
 getAllProduct.get('/', async (req, res) => {
   try {
     const page = req.query.page || 1; // Mendapatkan nomor halaman dari query parameter, default: 1
-    const limit = req.query.limit || 10; // Mendapatkan batasan jumlah data per halaman dari query parameter, default: 10
+    let limit = req.query.limit || 10; // Mendapatkan batasan jumlah data per halaman dari query parameter, default: 10
+
+    // Memastikan limit adalah angka yang valid
+    limit = parseInt(limit);
 
     const offset = (page - 1) * limit; // Menghitung offset berdasarkan nomor halaman
 
@@ -16,8 +19,6 @@ getAllProduct.get('/', async (req, res) => {
     });
 
     const totalCount = products.count;
-
-    console.log('Product', await Product.findAll);
 
     const totalPages = Math.ceil(totalCount / limit);
 
