@@ -1,8 +1,10 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import sequelize from '../apis/database.js';
+import { ImageGroup } from './imageGroup.js';
 
-export const Product = sequelize.define(
-  'product',
+class Product extends Model {}
+
+Product.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -103,9 +105,13 @@ export const Product = sequelize.define(
     },
   },
   {
+    sequelize,
+    timestamps: false,
     tableName: 'product',
-    timestamps: false, // Tambahkan ini
-
-    // timestamps: true, // Tambahkan ini
+    modelName: 'product',
   }
 );
+
+Product.belongsTo(ImageGroup, { foreignKey: 'image_group_id' });
+
+export { Product };

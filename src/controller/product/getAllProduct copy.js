@@ -1,34 +1,23 @@
 import { Router } from 'express';
-// import { Product, Image, ImageGroup } from '../../model';
+import Product from '../../model/product';
 
-import { ImageGroup } from '../../model/imageGroup.js';
-import { Product } from '../../model/product.js';
-import { Image } from '../../model/image.js';
 
-const getAllProduct = Router();
+const getAllProductCopy = Router();
 
-getAllProduct.get('/', async (req, res) => {
+getAllProductCopy.get('/', async (req, res) => {
   try {
-    const page = req.query.page || 1;
-    let limit = req.query.limit || 10;
+    const page = req.query.page || 1; // Mendapatkan nomor halaman dari query parameter, default: 1
+    let limit = req.query.limit || 10; // Mendapatkan batasan jumlah data per halaman dari query parameter, default: 10
 
+    // Memastikan limit adalah angka yang valid
     limit = parseInt(limit);
-    const offset = (page - 1) * limit;
+
+    const offset = (page - 1) * limit; // Menghitung offset berdasarkan nomor halaman
 
     const products = await Product.findAndCountAll({
       limit: limit,
       offset: offset,
-      order: [['created_at', 'DESC']],
-      include: [
-        {
-          model: ImageGroup,
-          include: [
-            {
-              model: Image,
-            },
-          ],
-        },
-      ],
+      order: [['created_at', 'DESC']], // Mengurutkan berdasarkan kolom "created_at" secara descending
     });
 
     const totalCount = products.count;
@@ -69,4 +58,4 @@ getAllProduct.get('/', async (req, res) => {
   }
 });
 
-export default getAllProduct;
+export default getAllProductCopy;

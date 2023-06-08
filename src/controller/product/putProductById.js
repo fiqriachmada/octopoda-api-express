@@ -6,8 +6,7 @@ const putProductById = Router();
 putProductById.put('/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    // const dataProduct = { ...req.body };
-    const { name, price } = req.body;
+    const dataProduct = { ...req.body };
 
     const product = await Product.findOne({ where: { id: id } });
 
@@ -15,12 +14,11 @@ putProductById.put('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Product not found' });
     }
 
-    await product.update({ name, price });
+    await product.update(dataProduct);
 
     const response = {
       status: res.statusCode,
-      // data: { id, ...dataProduct },
-      data: { id, name, price },
+      data: { id, ...dataProduct },
     };
 
     res.setHeader('Access-Control-Allow-Origin', '*');
